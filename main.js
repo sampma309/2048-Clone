@@ -43,7 +43,37 @@ const gameGrid = {
             alert('down'); 
         }
         else if (e.keyCode == '37') { // left arrow
-            alert('left');
+            // remove all zeroes
+            for (let i = 0; i < 4; i++) {
+                for (let j = 3; j > -1; j--) {         
+                    if (this.nums[i][j] === 0) {
+                        this.nums[i].splice(j, 1);
+                    }
+                }
+            }
+            // combine matching numbers
+            for (let i = 0; i < 4; i++) {
+                for (let j = this.nums[i].length; j > 0; j--) {
+                    if (this.nums[i][j] === this.nums[i][j-1]) {
+                        this.nums[i][j-1] *= 2;
+                        this.nums[i][j] = 0;
+                    }
+                }
+            }
+            // remove all zeroes added due to combinations
+            for (let i = 0; i < 4; i++) {
+                for (let j = this.nums[i].length; j > -1; j--) {         
+                    if (this.nums[i][j] === 0) {
+                        this.nums[i].splice(j, 1);
+                    }
+                }
+            }
+            // add back zeroes at start of line
+            for (let i = 0; i < 4; i++) {
+                while (this.nums[i].length < 4) {
+                    this.nums[i].push(0);
+                }
+            }
         }
         else if (e.keyCode == '39') { // right arrow
             // remove all zeroes
@@ -78,7 +108,7 @@ const gameGrid = {
                 }
             }
         }
-        // TODO: After pieces move call newPiece function and pass the new board state
+
         this.addNewTile();
         this.displayBoard();
         this.checkGameOver();
