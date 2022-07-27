@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <title>2048 Clone</title>
 </head>
-<script>document.onkeydown = gameGrid.moveTiles;</script>
-<body onload="gameGrid.generateNewBoard()">
+<body onload="gameGrid.generateNewBoard()" onkeydown="gameGrid.moveTiles()">
     <div>
         <button onclick="gameGrid.generateNewBoard()">New Game</button> <!-- change to reset board !-->
     </div>

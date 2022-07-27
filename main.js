@@ -36,33 +36,79 @@ const gameGrid = {
     moveTiles: function (e) {
         e = e || window.event;
 
-        if (e.keyCode == '38') {
+        if (e.keyCode == '38') { // up arrow
             alert('up');
-            // up arrow
         }
-        else if (e.keyCode == '40') {
-            alert('down');
-            // down arrow
+        else if (e.keyCode == '40') { // down arrow
+            alert('down'); 
         }
-        else if (e.keyCode == '37') {
+        else if (e.keyCode == '37') { // left arrow
             alert('left');
-        // left arrow
         }
-        else if (e.keyCode == '39') {
-            alert('right');
-        // right arrow
+        else if (e.keyCode == '39') { // right arrow
+            // remove all zeroes
+            for (let i = 0; i < 4; i++) {
+                for (let j = 3; j > -1; j--) {         
+                    if (this.nums[i][j] === 0) {
+                        this.nums[i].splice(j, 1);
+                    }
+                }
+            }
+            // combine matching numbers
+            for (let i = 0; i < 4; i++) {
+                for (let j = this.nums[i].length; j > 0; j--) {
+                    if (this.nums[i][j] === this.nums[i][j-1]) {
+                        this.nums[i][j] *= 2;
+                        this.nums[i][j-1] = 0;
+                    }
+                }
+            }
+            // remove all zeroes added due to combinations
+            for (let i = 0; i < 4; i++) {
+                for (let j = this.nums[i].length; j > -1; j--) {         
+                    if (this.nums[i][j] === 0) {
+                        this.nums[i].splice(j, 1);
+                    }
+                }
+            }
+            // add back zeroes at start of line
+            for (let i = 0; i < 4; i++) {
+                while (this.nums[i].length < 4) {
+                    this.nums[i].unshift(0);
+                }
+            }
         }
         // TODO: After pieces move call newPiece function and pass the new board state
+        this.addNewTile();
+        this.displayBoard();
     },
 
-    newPiece: function () {
-
+    addNewTile: function () {
+        let numsGenerated = 0;
+        while (numsGenerated < 1) {
+            let index = Math.floor(Math.random() * 16);
+            let num = 0
+            if (Math.random() < 0.66) {
+                num = 2;
+            } else {
+                num = 4;
+            }
+            if (this.nums[Math.floor(index / 4)][index % 4] === 0) {
+                this.nums[Math.floor(index / 4)][index % 4] = num
+                numsGenerated += 1;
+            }
+        }
     },
 
     displayBoard: function () {
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
-                document.getElementById("box" + (i * 4 + j + 1)).innerHTML = this.nums[i][j];
+                if (this.nums[i][j] !== 0) {
+                    document.getElementById("box" + (i * 4 + j + 1)).innerHTML = this.nums[i][j];
+                } else {
+                    document.getElementById("box" + (i * 4 + j + 1)).innerHTML = "";
+                }
+                
             }
         }
     }
