@@ -81,9 +81,12 @@ const gameGrid = {
         // TODO: After pieces move call newPiece function and pass the new board state
         this.addNewTile();
         this.displayBoard();
+        this.checkGameOver();
     },
 
     addNewTile: function () {
+
+        // add a single new tile to an unoccupied square
         let numsGenerated = 0;
         while (numsGenerated < 1) {
             let index = Math.floor(Math.random() * 16);
@@ -111,7 +114,23 @@ const gameGrid = {
                 
             }
         }
+    },
+
+    checkGameOver: function () {
+        gameOverFlag = 1;
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 4; j++) {
+                if (this.nums[i][j] === this.nums[i][j-1] ||
+                    this.nums[i][j] === this.nums[i][j+1] ||
+                    this.nums[i][j] === this.nums[i+1][j] ||
+                    this.nums[i][j] === this.nums[i-1][j]) {
+                        gameOverFlag = 0;
+                        break;
+                    }
+            }
+        }
+        if (gameOverFlag === 1) {
+            alert('game over');
+        }
     }
-
-
 }
