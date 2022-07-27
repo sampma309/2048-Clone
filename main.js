@@ -36,11 +36,104 @@ const gameGrid = {
     moveTiles: function (e) {
         e = e || window.event;
 
-        if (e.keyCode == '38') { // up arrow
-            alert('up');
+        if (e.keyCode == '38') { // up arrow (left transpose)
+            // transpose matrix
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < i; j++) {
+                    tmp = this.nums[i][j];
+                    this.nums[i][j] = this.nums[j][i];
+                    this.nums[j][i] = tmp;
+                }
+            }
+            // remove all zeroes
+            for (let i = 0; i < 4; i++) {
+                for (let j = 3; j > -1; j--) {         
+                    if (this.nums[i][j] === 0) {
+                        this.nums[i].splice(j, 1);
+                    }
+                }
+            }
+            // combine matching numbers
+            for (let i = 0; i < 4; i++) {
+                for (let j = this.nums[i].length; j > 0; j--) {
+                    if (this.nums[i][j] === this.nums[i][j-1]) {
+                        this.nums[i][j-1] *= 2;
+                        this.nums[i][j] = 0;
+                    }
+                }
+            }
+            // remove all zeroes added due to combinations
+            for (let i = 0; i < 4; i++) {
+                for (let j = this.nums[i].length; j > -1; j--) {         
+                    if (this.nums[i][j] === 0) {
+                        this.nums[i].splice(j, 1);
+                    }
+                }
+            }
+            // add back zeroes at start of line
+            for (let i = 0; i < 4; i++) {
+                while (this.nums[i].length < 4) {
+                    this.nums[i].push(0);
+                }
+            }
+            // Transpose matrix back
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < i; j++) {
+                    tmp = this.nums[i][j];
+                    this.nums[i][j] = this.nums[j][i];
+                    this.nums[j][i] = tmp;
+                }
+            }
         }
-        else if (e.keyCode == '40') { // down arrow
-            alert('down'); 
+        else if (e.keyCode == '40') { // down arrow (right transpose)
+            // transpose matrix
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < i; j++) {
+                    tmp = this.nums[i][j];
+                    this.nums[i][j] = this.nums[j][i];
+                    this.nums[j][i] = tmp;
+                }
+            }
+
+            // remove all zeroes
+            for (let i = 0; i < 4; i++) {
+                for (let j = 3; j > -1; j--) {         
+                    if (this.nums[i][j] === 0) {
+                        this.nums[i].splice(j, 1);
+                    }
+                }
+            }
+            // combine matching numbers
+            for (let i = 0; i < 4; i++) {
+                for (let j = this.nums[i].length; j > 0; j--) {
+                    if (this.nums[i][j] === this.nums[i][j-1]) {
+                        this.nums[i][j] *= 2;
+                        this.nums[i][j-1] = 0;
+                    }
+                }
+            }
+            // remove all zeroes added due to combinations
+            for (let i = 0; i < 4; i++) {
+                for (let j = this.nums[i].length; j > -1; j--) {         
+                    if (this.nums[i][j] === 0) {
+                        this.nums[i].splice(j, 1);
+                    }
+                }
+            }
+            // add back zeroes at start of line
+            for (let i = 0; i < 4; i++) {
+                while (this.nums[i].length < 4) {
+                    this.nums[i].unshift(0);
+                }
+            }
+            // Transpose matrix back
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < i; j++) {
+                    tmp = this.nums[i][j];
+                    this.nums[i][j] = this.nums[j][i];
+                    this.nums[j][i] = tmp;
+                }
+            }
         }
         else if (e.keyCode == '37') { // left arrow
             // remove all zeroes
