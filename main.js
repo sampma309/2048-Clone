@@ -33,8 +33,7 @@ const gameGrid = {
         this.displayBoard();
     },
 
-
-    // NEED TO MAKE IT SO PIECE DOESN'T SPAWN IF A LEGAL MOVE WASN'T MADE
+// LEGAL MOVE TRIGGER STILL NOT WORKING!!!
     moveTiles: function (e) {
         e = e || window.event;
         let legalMove = 0;
@@ -246,10 +245,45 @@ const gameGrid = {
             for (let j = 0; j < 4; j++) {
                 if (this.nums[i][j] !== 0) {
                     document.getElementById("box" + (i * 4 + j + 1)).innerHTML = this.nums[i][j];
+                    switch(this.nums[i][j]) {
+                        case 2:
+                            document.getElementById("box" + (i * 4 + j + 1)).style.backgroundColor = "#fff8dc";
+                            break;
+                        case 4:
+                            document.getElementById("box" + (i * 4 + j + 1)).style.backgroundColor = "#f0e68c";
+                            break;
+                        case 8:
+                            document.getElementById("box" + (i * 4 + j + 1)).style.backgroundColor = "#eedc82";
+                            break;
+                        case 16:
+                            document.getElementById("box" + (i * 4 + j + 1)).style.backgroundColor = "#ffd700";
+                            break;
+                        case 32:
+                            document.getElementById("box" + (i * 4 + j + 1)).style.backgroundColor = "#f4c430";
+                            break;
+                        case 64:
+                            document.getElementById("box" + (i * 4 + j + 1)).style.backgroundColor = "#ffaa33";
+                            break;
+                        case 128:
+                            document.getElementById("box" + (i * 4 + j + 1)).style.backgroundColor = "#f5b20a";
+                            break;
+                        case 256:
+                            document.getElementById("box" + (i * 4 + j + 1)).style.backgroundColor = "#ffa500";
+                            break;
+                        case 512:
+                            document.getElementById("box" + (i * 4 + j + 1)).style.backgroundColor = "#ff5f15";
+                            break;
+                        case 1024:
+                            document.getElementById("box" + (i * 4 + j + 1)).style.backgroundColor = "#e35335";
+                            break;
+                        case 2048:
+                            document.getElementById("box" + (i * 4 + j + 1)).style.backgroundColor = "#00ff00";
+                            break;
+                    }
                 } else {
                     document.getElementById("box" + (i * 4 + j + 1)).innerHTML = "";
+                    document.getElementById("box" + (i * 4 + j + 1)).style.backgroundColor = "#FFFFFF";
                 }
-                
             }
         }
     },
