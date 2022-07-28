@@ -33,10 +33,14 @@ const gameGrid = {
         this.displayBoard();
     },
 
+
+    // NEED TO MAKE IT SO PIECE DOESN'T SPAWN IF A LEGAL MOVE WASN'T MADE
     moveTiles: function (e) {
         e = e || window.event;
+        let legalMove = 0;
 
         if (e.keyCode == '38') { // up arrow (left transpose)
+
             // transpose matrix
             for (let i = 0; i < 4; i++) {
                 for (let j = 0; j < i; j++) {
@@ -50,6 +54,7 @@ const gameGrid = {
                 for (let j = 3; j > -1; j--) {         
                     if (this.nums[i][j] === 0) {
                         this.nums[i].splice(j, 1);
+                        legalMove = 1;
                     }
                 }
             }
@@ -59,6 +64,7 @@ const gameGrid = {
                     if (this.nums[i][j] === this.nums[i][j-1]) {
                         this.nums[i][j-1] *= 2;
                         this.nums[i][j] = 0;
+                        legalMove = 1;
                     }
                 }
             }
@@ -100,6 +106,7 @@ const gameGrid = {
                 for (let j = 3; j > -1; j--) {         
                     if (this.nums[i][j] === 0) {
                         this.nums[i].splice(j, 1);
+                        legalMove = 1;
                     }
                 }
             }
@@ -109,6 +116,7 @@ const gameGrid = {
                     if (this.nums[i][j] === this.nums[i][j-1]) {
                         this.nums[i][j] *= 2;
                         this.nums[i][j-1] = 0;
+                        legalMove = 1;
                     }
                 }
             }
@@ -141,6 +149,7 @@ const gameGrid = {
                 for (let j = 3; j > -1; j--) {         
                     if (this.nums[i][j] === 0) {
                         this.nums[i].splice(j, 1);
+                        legalMove = 1;
                     }
                 }
             }
@@ -150,6 +159,7 @@ const gameGrid = {
                     if (this.nums[i][j] === this.nums[i][j-1]) {
                         this.nums[i][j-1] *= 2;
                         this.nums[i][j] = 0;
+                        legalMove = 1;
                     }
                 }
             }
@@ -174,6 +184,7 @@ const gameGrid = {
                 for (let j = 3; j > -1; j--) {         
                     if (this.nums[i][j] === 0) {
                         this.nums[i].splice(j, 1);
+                        legalMove = 1;
                     }
                 }
             }
@@ -183,6 +194,7 @@ const gameGrid = {
                     if (this.nums[i][j] === this.nums[i][j-1]) {
                         this.nums[i][j] *= 2;
                         this.nums[i][j-1] = 0;
+                        legalMove = 1;
                     }
                 }
             }
@@ -202,7 +214,10 @@ const gameGrid = {
             }
         }
 
-        this.addNewTile();
+        if (legalMove === 1) {
+            this.addNewTile();
+        }
+        
         this.displayBoard();
         this.checkGameOver();
     },
@@ -240,20 +255,57 @@ const gameGrid = {
     },
 
     checkGameOver: function () {
-        gameOverFlag = 1;
+        let gameOverFlag = 1;
+
+        // Check that all boxes are filled
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
-                if (this.nums[i][j] === this.nums[i][j-1] ||
-                    this.nums[i][j] === this.nums[i][j+1] ||
-                    this.nums[i][j] === this.nums[i+1][j] ||
-                    this.nums[i][j] === this.nums[i-1][j]) {
-                        gameOverFlag = 0;
-                        break;
-                    }
+                if (this.nums[i][j] === 0) {
+                    gameOverFlag = 0;
+                }
             }
         }
+
+        // Check that no two adjacent boxes are the same
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 4; j++) {
+                try { if (this.nums[i][j] === this.nums[i][j-1]) {
+                    gameOverFlag = 0;
+                    break;
+                    }
+                }
+                catch(TypeError) {
+
+                }
+                try { if (this.nums[i][j] === this.nums[i][j+1]) {
+                    gameOverFlag = 0;
+                    break;
+                    }
+                }
+                catch(TypeError) {
+
+                }
+                try { if (this.nums[i][j] === this.nums[i+1][j]) {
+                    gameOverFlag = 0;
+                    break;
+                    }
+                }
+                catch(TypeError) {
+
+                }
+                try { if (this.nums[i][j] === this.nums[i-1][j]) {
+                    gameOverFlag = 0;
+                    break;
+                    }
+                }
+                catch(TypeError) {
+                }
+            }  
+        }
+
+        // Game over if flag is still set
         if (gameOverFlag === 1) {
-            alert('game over');
+            document.getElementById("game-over").innerHTML = "GAME OVER";
         }
     }
 }
