@@ -36,7 +36,14 @@ const gameGrid = {
 // LEGAL MOVE TRIGGER STILL NOT WORKING!!!
     moveTiles: function (e) {
         e = e || window.event;
-        let legalMove = 0;
+
+        // Create a duplicate of nums to make sure a move happened
+        nums_copy = [[],[],[],[]];
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 4; j++) {
+                nums_copy[i][j] = this.nums[i][j];
+            }
+        }
 
         if (e.keyCode == '38') { // up arrow (left transpose)
 
@@ -53,7 +60,6 @@ const gameGrid = {
                 for (let j = 3; j > -1; j--) {         
                     if (this.nums[i][j] === 0) {
                         this.nums[i].splice(j, 1);
-                        legalMove = 1;
                     }
                 }
             }
@@ -63,7 +69,6 @@ const gameGrid = {
                     if (this.nums[i][j] === this.nums[i][j-1]) {
                         this.nums[i][j-1] *= 2;
                         this.nums[i][j] = 0;
-                        legalMove = 1;
                     }
                 }
             }
@@ -105,7 +110,6 @@ const gameGrid = {
                 for (let j = 3; j > -1; j--) {         
                     if (this.nums[i][j] === 0) {
                         this.nums[i].splice(j, 1);
-                        legalMove = 1;
                     }
                 }
             }
@@ -115,7 +119,6 @@ const gameGrid = {
                     if (this.nums[i][j] === this.nums[i][j-1]) {
                         this.nums[i][j] *= 2;
                         this.nums[i][j-1] = 0;
-                        legalMove = 1;
                     }
                 }
             }
@@ -148,7 +151,6 @@ const gameGrid = {
                 for (let j = 3; j > -1; j--) {         
                     if (this.nums[i][j] === 0) {
                         this.nums[i].splice(j, 1);
-                        legalMove = 1;
                     }
                 }
             }
@@ -158,7 +160,6 @@ const gameGrid = {
                     if (this.nums[i][j] === this.nums[i][j-1]) {
                         this.nums[i][j-1] *= 2;
                         this.nums[i][j] = 0;
-                        legalMove = 1;
                     }
                 }
             }
@@ -183,7 +184,6 @@ const gameGrid = {
                 for (let j = 3; j > -1; j--) {         
                     if (this.nums[i][j] === 0) {
                         this.nums[i].splice(j, 1);
-                        legalMove = 1;
                     }
                 }
             }
@@ -193,7 +193,6 @@ const gameGrid = {
                     if (this.nums[i][j] === this.nums[i][j-1]) {
                         this.nums[i][j] *= 2;
                         this.nums[i][j-1] = 0;
-                        legalMove = 1;
                     }
                 }
             }
@@ -213,10 +212,22 @@ const gameGrid = {
             }
         }
 
+        // Check that a legal move was made
+        let legalMove = 0;
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 4; j++) {
+                if (this.nums[i][j] !== nums_copy[i][j]) {
+                    legalMove = 1;
+                    break;
+                }
+            }
+            continue;
+        }
+        
         if (legalMove === 1) {
             this.addNewTile();
         }
-        
+
         this.displayBoard();
         this.checkGameOver();
     },
