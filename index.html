@@ -12,9 +12,11 @@
     <div>
         <h1>Sampma309 2048 Clone</h1>
     </div>
+    <div class="break"></div>
     <div>
         <button onclick="gameGrid.generateNewBoard()">New Game</button>
     </div>
+    <div class="break"></div>
     <div class="grid-container" id="game-board">
         <div class="grid-item" id="box1"></div>
         <div class="grid-item" id="box2"></div>
@@ -33,8 +35,16 @@
         <div class="grid-item" id="box15"></div>
         <div class="grid-item" id="box16"></div>
     </div>
+    <div class="break"></div>
     <div>
         <h1 id="game-over"></h1>
+    </div>
+    <div class="break"></div>
+    <div id="instructions">
+        Use the arrow keys to move pieces around. Moving two of the same piece into each
+        other will cause the blocks to merge. Try to reach 2048.
+
+        Credit for the <a href="https://play2048.co/">original game</a> goes to Gabriele Cirulli.
     </div>
 </body>
 </html>

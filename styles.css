@@ -13,4 +13,23 @@
   text-align: center;
   width: 60px;
   height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-grow: 1;
+}
+
+.break {
+  flex-basis: 100%;
+  height: 20px;
+}
+
+#instructions {
+  width: 500px;
 }

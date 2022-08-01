@@ -13,6 +13,9 @@ const gameGrid = {
             }
         }
 
+        // Remove game over message
+        document.getElementById("game-over").innerHTML = "";
+
         // Place two numbers randomly (50% chance to be 2 or 4) 
         let numsGenerated = 0;
         while (numsGenerated < 2) {
@@ -33,7 +36,6 @@ const gameGrid = {
         this.displayBoard();
     },
 
-// LEGAL MOVE TRIGGER STILL NOT WORKING!!!
     moveTiles: function (e) {
         e = e || window.event;
 
@@ -221,7 +223,6 @@ const gameGrid = {
                     break;
                 }
             }
-            continue;
         }
         
         if (legalMove === 1) {
