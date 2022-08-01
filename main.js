@@ -302,12 +302,15 @@ const gameGrid = {
 
     checkGameOver: function () {
         let gameOverFlag = 1;
+        let winFlag = 0;
 
         // Check that all boxes are filled
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
                 if (this.nums[i][j] === 0) {
                     gameOverFlag = 0;
+                } else if (this.nums[i][j] === 2048) {
+                    winFlag = 1;
                 }
             }
         }
@@ -349,9 +352,14 @@ const gameGrid = {
             }  
         }
 
-        // Game over if flag is still set
+        // Game over (lose) if flag is still set
         if (gameOverFlag === 1) {
-            document.getElementById("game-over").innerHTML = "GAME OVER";
+            document.getElementById("game-over").innerHTML = "GAME OVER. YOU LOSE.";
+        }
+
+        // Game over (win)
+        if (winFlag === 1) {
+            document.getElementById("game-over").innerHTML = "GAME OVER. YOU WIN!!!";
         }
     }
 }
