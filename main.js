@@ -16,7 +16,7 @@ const gameGrid = {
         // Remove game over message
         document.getElementById("game-over").innerHTML = "";
 
-        // Place two numbers randomly (50% chance to be 2 or 4) 
+        // Place two numbers randomly (66% chance to be 2) 
         let numsGenerated = 0;
         while (numsGenerated < 2) {
             let index = Math.floor(Math.random() * 16);
